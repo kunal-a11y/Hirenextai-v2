@@ -1,0 +1,15 @@
+packages:
+  "framer-motion": "For premium smooth animations, page transitions, and interactive micro-interactions"
+  "date-fns": "For human-readable date formatting in job listings and applications"
+  "lucide-react": "For beautiful consistent iconography"
+  "clsx": "For conditional class name merging"
+  "tailwind-merge": "For merging tailwind classes safely"
+
+images:
+  - path: "artifacts/hirenextai/public/images/hero-abstract.png"
+    description: "Dark, moody, premium abstract 3D gradient mesh in deep navy, indigo, and vibrant purple colors, with subtle glassmorphism geometric shapes floating. Very high quality, tech startup feel."
+    aspect_ratio: "16:9"
+
+notes:
+  - Intercepting window.fetch in App.tsx to automatically append the 'hirenext_token' from localStorage to all /api/ requests, ensuring generated hooks work seamlessly with auth.
+  - Using generated hooks directly from @workspace/api-client-react.

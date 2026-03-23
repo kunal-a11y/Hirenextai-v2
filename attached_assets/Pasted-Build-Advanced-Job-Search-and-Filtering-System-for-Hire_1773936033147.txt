@@ -1,0 +1,126 @@
+Build Advanced Job Search and Filtering System for HirenextAI Job Portal.
+
+Goal:
+Users must be able to easily search and filter through large job database and quickly find relevant jobs.
+
+Frontend Requirements:
+
+Create a sticky filter panel on the Jobs page.
+
+Add search bar at top:
+
+* Search by Job Title
+* Search by Skills
+* Search by Company Name
+
+Add filter sections:
+
+1. Location Filter
+
+* City dropdown
+* Remote toggle (Remote / Onsite / Hybrid)
+
+2. Experience Filter
+
+* Fresher
+* 1–3 years
+* 3–5 years
+* 5+ years
+
+3. Salary Range Filter
+
+* Slider (₹0 – ₹30 LPA)
+* Show selected range dynamically
+
+4. Job Type Filter
+
+* Full Time
+* Internship
+* Contract
+* Part Time
+
+5. Skills Filter
+
+* Multi-select skill tags (React, Python, Java, UI/UX etc)
+
+6. Sort Options Dropdown
+
+* Latest Jobs
+* Highest Salary
+* Best Match %
+
+Make filter panel responsive:
+
+* Desktop → sidebar
+* Mobile → slide-up modal filter panel
+
+Add “Clear Filters” button.
+
+Backend Requirements:
+
+Enhance /api/jobs endpoint to support query parameters:
+
+* search
+* city
+* remote
+* experience
+* minSalary
+* maxSalary
+* jobType
+* skills (array)
+* sortBy (latest / salary / match)
+
+Implement database filtering logic using optimized queries.
+
+Add pagination support:
+
+* page
+* limit
+
+Return total job count and filtered results.
+
+Performance Requirements:
+
+Add database indexes on:
+
+* job title
+* skills
+* location
+* salary
+* posted date
+
+Ensure API response under 500ms for 10k+ jobs.
+
+AI Matching Integration:
+
+If user is logged in:
+
+* Calculate match score using:
+
+  * Skill overlap
+  * Location preference
+  * Experience match
+  * Salary expectation
+
+Return matchScore field in job response.
+
+Frontend Job Card Updates:
+
+* Show Match % badge
+* Highlight recommended jobs section at top:
+  “Best Jobs For You”
+
+UX Enhancements:
+
+* Show loading skeleton while filtering
+* Maintain filter state in URL query params
+* Infinite scroll or Load More button
+
+Goal Outcome:
+
+Users should be able to:
+
+* Find relevant jobs in seconds
+* Filter large datasets smoothly
+* Feel intelligent recommendation system
+* Increase session time and retention

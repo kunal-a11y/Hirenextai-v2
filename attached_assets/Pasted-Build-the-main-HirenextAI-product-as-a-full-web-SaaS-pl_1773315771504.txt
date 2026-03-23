@@ -1,0 +1,147 @@
+Build the main HirenextAI product as a full web SaaS platform with all core features of the AI Job Assistant system.
+
+GENERAL PRODUCT GOAL
+
+Create a powerful career platform where students and freshers can:
+
+* Discover real job opportunities
+* Set up an AI career assistant
+* Generate job applications using AI
+* Track applications
+* Manage subscription plans
+
+THEME & DESIGN
+
+* Premium dark theme
+* Main background: deep black / dark gradient
+* Accent color: modern purple (minimal use)
+* Glassmorphism cards
+* Soft glow effects
+* Smooth transitions
+* Clean SaaS dashboard layout
+
+LANDING WEBSITE
+
+Create a modern landing page with:
+
+* Hero section:
+  “Find Your Next Job Smarter with AI”
+* Feature highlights:
+  Smart Job Matching
+  AI Cover Letter Generator
+  Application Tracker
+  Interview Preparation AI
+* Pricing section:
+  Free / Pro / Premium
+* Testimonials
+* FAQ
+* Footer
+
+Buttons:
+
+* Get Started
+* Login
+
+AUTHENTICATION
+
+* Email login
+* Phone OTP login
+* Persistent sessions
+* If user already logged in → go directly to dashboard
+
+FIRST LOGIN EXPERIENCE
+
+Show mandatory modal popup:
+
+“Setup Your AI Career Assistant”
+
+Collect:
+
+* Degree & specialization
+* Skills (multi-select + custom add)
+* Preferred job roles
+* Preferred cities
+* Remote preference
+* Fresher / experienced
+* Expected salary range
+
+User must complete before accessing dashboard.
+
+DASHBOARD
+
+Sidebar navigation:
+
+* Jobs
+* Applications
+* AI Tools
+* Profile
+* Subscription
+
+Top bar:
+
+* User avatar
+* Profile completion %
+* AI usage remaining
+
+JOB SYSTEM
+
+* Fetch real job data from backend:
+  GET /api/jobs
+* Smart search fallback system
+* Related job suggestions
+* Filters:
+  City
+  Remote
+  Internship
+  Fresher
+  Full-time
+* Job detail page
+* Apply using AI preview
+
+AI FEATURES
+
+* Generate cover letter
+* Generate recruiter message
+* Resume bullet optimizer
+* Interview question generator
+* Monthly usage tracking
+
+APPLICATION TRACKER
+
+* Status stages:
+  Applied
+  Under Review
+  Interview
+  Offer
+  Rejected
+
+PROFILE PAGE
+
+* Edit education
+* Edit skills
+* Resume upload
+* Career preferences
+* Profile completion bar
+
+SUBSCRIPTION
+
+Free Plan:
+
+* 5 AI generations per month
+* Limited applications
+
+Pro / Premium:
+
+* Increased limits
+* Priority recommendations
+
+TECH STACK
+
+* React (Next.js or Vite)
+* Tailwind CSS
+* Framer Motion animations
+* Fully responsive desktop-first UI
+
+GOAL
+
+Build a premium AI career platform website that feels like a modern startup SaaS dashboard with real job data and intelligent AI tools.

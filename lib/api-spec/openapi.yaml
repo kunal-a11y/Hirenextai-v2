@@ -1,0 +1,1005 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: HirenextAI API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: auth
+    description: Authentication operations
+  - name: jobs
+    description: Job listing operations
+  - name: applications
+    description: Job application operations
+  - name: ai
+    description: AI tools operations
+  - name: profile
+    description: User profile operations
+  - name: subscription
+    description: Subscription management
+
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /auth/register:
+    post:
+      operationId: register
+      tags: [auth]
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        "200":
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      summary: Login with email and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/me:
+    get:
+      operationId: getMe
+      tags: [auth]
+      summary: Get current user
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Current user info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/logout:
+    post:
+      operationId: logout
+      tags: [auth]
+      summary: Logout user
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+
+  /jobs:
+    get:
+      operationId: getJobs
+      tags: [jobs]
+      summary: Get job listings
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: location
+          in: query
+          schema:
+            type: string
+        - name: remote
+          in: query
+          schema:
+            type: boolean
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [full-time, part-time, internship, freelance]
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        "200":
+          description: Job listings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobsResponse"
+
+  /jobs/{jobId}:
+    get:
+      operationId: getJob
+      tags: [jobs]
+      summary: Get a single job
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Job detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+        "404":
+          description: Job not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /applications:
+    get:
+      operationId: getApplications
+      tags: [applications]
+      summary: Get user's job applications
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: User applications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Application"
+    post:
+      operationId: createApplication
+      tags: [applications]
+      summary: Apply for a job
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateApplicationRequest"
+      responses:
+        "200":
+          description: Application created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /applications/{applicationId}:
+    patch:
+      operationId: updateApplication
+      tags: [applications]
+      summary: Update application status
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateApplicationRequest"
+      responses:
+        "200":
+          description: Application updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+
+  /ai/cover-letter:
+    post:
+      operationId: generateCoverLetter
+      tags: [ai]
+      summary: Generate a cover letter
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CoverLetterRequest"
+      responses:
+        "200":
+          description: Generated cover letter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIGenerationResponse"
+        "402":
+          description: Usage limit reached
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /ai/recruiter-message:
+    post:
+      operationId: generateRecruiterMessage
+      tags: [ai]
+      summary: Generate a recruiter outreach message
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecruiterMessageRequest"
+      responses:
+        "200":
+          description: Generated recruiter message
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIGenerationResponse"
+        "402":
+          description: Usage limit reached
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /ai/resume-optimize:
+    post:
+      operationId: optimizeResumeBullet
+      tags: [ai]
+      summary: Optimize a resume bullet point
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResumeBulletRequest"
+      responses:
+        "200":
+          description: Optimized resume bullet
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIGenerationResponse"
+        "402":
+          description: Usage limit reached
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /ai/interview-prep:
+    post:
+      operationId: generateInterviewPrep
+      tags: [ai]
+      summary: Generate interview preparation content
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InterviewPrepRequest"
+      responses:
+        "200":
+          description: Interview prep content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIGenerationResponse"
+        "402":
+          description: Usage limit reached
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /ai/usage:
+    get:
+      operationId: getAIUsage
+      tags: [ai]
+      summary: Get AI usage stats for the current month
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: AI usage stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIUsageStats"
+
+  /profile:
+    get:
+      operationId: getProfile
+      tags: [profile]
+      summary: Get user profile
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+    patch:
+      operationId: updateProfile
+      tags: [profile]
+      summary: Update user profile
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProfileRequest"
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+
+  /subscription:
+    get:
+      operationId: getSubscription
+      tags: [subscription]
+      summary: Get current subscription
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Subscription info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Subscription"
+    post:
+      operationId: updateSubscription
+      tags: [subscription]
+      summary: Update subscription plan
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateSubscriptionRequest"
+      responses:
+        "200":
+          description: Updated subscription
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Subscription"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+        - error
+
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+
+    RegisterRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 6
+        phone:
+          type: string
+      required:
+        - name
+        - email
+        - password
+
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+        - email
+        - password
+
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        user:
+          $ref: "#/components/schemas/User"
+      required:
+        - token
+        - user
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+          nullable: true
+        avatarUrl:
+          type: string
+          nullable: true
+        subscriptionPlan:
+          type: string
+          enum: [free, pro, premium]
+        profileCompletionPct:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - name
+        - email
+        - subscriptionPlan
+        - profileCompletionPct
+        - createdAt
+
+    Job:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        company:
+          type: string
+        companyLogoUrl:
+          type: string
+          nullable: true
+        location:
+          type: string
+        isRemote:
+          type: boolean
+        type:
+          type: string
+          enum: [full-time, part-time, internship, freelance]
+        category:
+          type: string
+        salaryMin:
+          type: integer
+          nullable: true
+        salaryMax:
+          type: integer
+          nullable: true
+        description:
+          type: string
+        requirements:
+          type: array
+          items:
+            type: string
+        skills:
+          type: array
+          items:
+            type: string
+        postedAt:
+          type: string
+          format: date-time
+        isFresher:
+          type: boolean
+        experienceYears:
+          type: integer
+          nullable: true
+        applicationCount:
+          type: integer
+        source:
+          type: string
+          description: "Source of the job listing (e.g. JSearch, Adzuna, Arbeitnow, Database)"
+          nullable: true
+        applyUrl:
+          type: string
+          nullable: true
+          description: "External URL to apply for the job"
+      required:
+        - id
+        - title
+        - company
+        - location
+        - isRemote
+        - type
+        - category
+        - description
+        - requirements
+        - skills
+        - postedAt
+        - isFresher
+        - applicationCount
+
+    JobsResponse:
+      type: object
+      properties:
+        jobs:
+          type: array
+          items:
+            $ref: "#/components/schemas/Job"
+        total:
+          type: integer
+        page:
+          type: integer
+        totalPages:
+          type: integer
+      required:
+        - jobs
+        - total
+        - page
+        - totalPages
+
+    Application:
+      type: object
+      properties:
+        id:
+          type: integer
+        jobId:
+          type: integer
+        userId:
+          type: integer
+        status:
+          type: string
+          enum: [applied, viewed, shortlisted, interview, rejected, offered]
+        coverLetter:
+          type: string
+          nullable: true
+        appliedAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        job:
+          $ref: "#/components/schemas/Job"
+      required:
+        - id
+        - jobId
+        - userId
+        - status
+        - appliedAt
+        - updatedAt
+        - job
+
+    CreateApplicationRequest:
+      type: object
+      properties:
+        jobId:
+          type: integer
+        coverLetter:
+          type: string
+          nullable: true
+      required:
+        - jobId
+
+    UpdateApplicationRequest:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [applied, viewed, shortlisted, interview, rejected, offered]
+
+    CoverLetterRequest:
+      type: object
+      properties:
+        jobTitle:
+          type: string
+        company:
+          type: string
+        jobDescription:
+          type: string
+        userSkills:
+          type: array
+          items:
+            type: string
+        userName:
+          type: string
+      required:
+        - jobTitle
+        - company
+        - jobDescription
+
+    RecruiterMessageRequest:
+      type: object
+      properties:
+        jobTitle:
+          type: string
+        company:
+          type: string
+        recruiterName:
+          type: string
+          nullable: true
+        userSkills:
+          type: array
+          items:
+            type: string
+      required:
+        - jobTitle
+        - company
+
+    ResumeBulletRequest:
+      type: object
+      properties:
+        bullet:
+          type: string
+        jobTitle:
+          type: string
+        targetRole:
+          type: string
+      required:
+        - bullet
+        - jobTitle
+
+    InterviewPrepRequest:
+      type: object
+      properties:
+        jobTitle:
+          type: string
+        company:
+          type: string
+        jobDescription:
+          type: string
+      required:
+        - jobTitle
+        - company
+
+    AIGenerationResponse:
+      type: object
+      properties:
+        content:
+          type: string
+        usageRemaining:
+          type: integer
+        usageLimit:
+          type: integer
+      required:
+        - content
+        - usageRemaining
+        - usageLimit
+
+    AIUsageStats:
+      type: object
+      properties:
+        used:
+          type: integer
+        limit:
+          type: integer
+        remaining:
+          type: integer
+        plan:
+          type: string
+          enum: [free, pro, premium]
+        resetDate:
+          type: string
+          format: date-time
+      required:
+        - used
+        - limit
+        - remaining
+        - plan
+        - resetDate
+
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        headline:
+          type: string
+          nullable: true
+        bio:
+          type: string
+          nullable: true
+        skills:
+          type: array
+          items:
+            type: string
+        education:
+          type: array
+          items:
+            $ref: "#/components/schemas/Education"
+        experience:
+          type: array
+          items:
+            $ref: "#/components/schemas/Experience"
+        resumeUrl:
+          type: string
+          nullable: true
+        preferredLocations:
+          type: array
+          items:
+            type: string
+        preferredCategories:
+          type: array
+          items:
+            type: string
+        openToRemote:
+          type: boolean
+        expectedSalaryMin:
+          type: integer
+          nullable: true
+        expectedSalaryMax:
+          type: integer
+          nullable: true
+        isFresher:
+          type: boolean
+        degreeLevel:
+          type: string
+          nullable: true
+        specialization:
+          type: string
+          nullable: true
+        setupCompleted:
+          type: boolean
+        completionPct:
+          type: integer
+      required:
+        - id
+        - userId
+        - skills
+        - education
+        - experience
+        - preferredLocations
+        - preferredCategories
+        - openToRemote
+        - isFresher
+        - setupCompleted
+        - completionPct
+
+    Education:
+      type: object
+      properties:
+        institution:
+          type: string
+        degree:
+          type: string
+        field:
+          type: string
+        startYear:
+          type: integer
+        endYear:
+          type: integer
+          nullable: true
+        current:
+          type: boolean
+      required:
+        - institution
+        - degree
+        - field
+        - startYear
+        - current
+
+    Experience:
+      type: object
+      properties:
+        company:
+          type: string
+        title:
+          type: string
+        location:
+          type: string
+          nullable: true
+        startDate:
+          type: string
+        endDate:
+          type: string
+          nullable: true
+        current:
+          type: boolean
+        description:
+          type: string
+          nullable: true
+      required:
+        - company
+        - title
+        - startDate
+        - current
+
+    UpdateProfileRequest:
+      type: object
+      properties:
+        headline:
+          type: string
+          nullable: true
+        bio:
+          type: string
+          nullable: true
+        skills:
+          type: array
+          items:
+            type: string
+        education:
+          type: array
+          items:
+            $ref: "#/components/schemas/Education"
+        experience:
+          type: array
+          items:
+            $ref: "#/components/schemas/Experience"
+        preferredLocations:
+          type: array
+          items:
+            type: string
+        preferredCategories:
+          type: array
+          items:
+            type: string
+        openToRemote:
+          type: boolean
+        expectedSalaryMin:
+          type: integer
+          nullable: true
+        expectedSalaryMax:
+          type: integer
+          nullable: true
+        isFresher:
+          type: boolean
+        degreeLevel:
+          type: string
+          nullable: true
+        specialization:
+          type: string
+          nullable: true
+        setupCompleted:
+          type: boolean
+
+    Subscription:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        plan:
+          type: string
+          enum: [free, pro, premium]
+        status:
+          type: string
+          enum: [active, cancelled, expired]
+        currentPeriodStart:
+          type: string
+          format: date-time
+        currentPeriodEnd:
+          type: string
+          format: date-time
+          nullable: true
+        cancelledAt:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+        - id
+        - userId
+        - plan
+        - status
+        - currentPeriodStart
+
+    UpdateSubscriptionRequest:
+      type: object
+      properties:
+        plan:
+          type: string
+          enum: [free, pro, premium]
+      required:
+        - plan

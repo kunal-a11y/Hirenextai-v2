@@ -1,0 +1,77 @@
+Upgrade the Profile and Resume System for a Job Portal Website (Hirenextai.com)
+
+Profile Section Improvements:
+
+1. Add more profile fields to improve job matching accuracy. New fields should include:
+
+* Full Name
+* Profile Photo
+* Phone Number
+* Email
+* Date of Birth
+* Gender (Optional)
+* City / Current Location
+* Preferred Job Location
+* Skills (Multiple Select / Tags)
+* Languages Known
+* Education Details (Course, College, Year)
+* Work Experience (Company, Role, Years)
+* Internship Experience
+* Certifications
+* Portfolio / Project Links
+* Expected Salary
+* Job Type Preference (Full Time / Part Time / Remote / Internship)
+* Availability Status (Immediate / 15 Days / 1 Month)
+* Resume Upload
+
+2. Show Profile Completion Percentage based on filled fields.
+
+3. If profile completion is less than 20%, show a popup asking the user to complete their profile.
+
+4. For new users, force a profile setup popup on first login.
+
+AI Resume Features:
+
+5. Add two options in Resume Section:
+
+Option 1 — Upload Resume:
+
+* User can upload their resume (PDF / DOC).
+* AI will scan and review the resume.
+* AI will show:
+
+  * Resume Strength Score
+  * Missing Skills Suggestions
+  * Recommended Job Roles
+  * Salary Range Estimate
+  * Resume Improvement Tips
+
+6. AI should automatically suggest:
+   "You are eligible for these job roles based on your resume."
+
+Option 2 — Create Resume with AI:
+
+* AI will ask step-by-step questions such as:
+
+  * Education
+  * Skills
+  * Experience
+  * Projects
+  * Career Goals
+* Based on answers, AI will generate a professional resume.
+
+7. For FREE users:
+
+* Resume footer should include text:
+  "Resume generated using Hirenextai.com"
+
+8. For PAID users:
+
+* Resume should NOT include any branding or footer.
+
+9. Allow users to download resume in PDF format.
+
+10. Store resume data in database for future edits.
+
+Goal:
+Make profile system intelligent, AI-driven, and increase chances of job matching and user engagement.

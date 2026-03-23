@@ -1,0 +1,116 @@
+Fix the Jobs system in both the mobile app and the website.
+
+Currently the app is still showing mock / fallback jobs.
+I want ONLY real job data from APIs.
+
+Do the following:
+
+1. Remove dependency on MOCK_JOBS as primary source.
+   Mock jobs should be used ONLY as a last fallback when all APIs fail.
+
+2. Create a unified Job Aggregator Service.
+
+File:
+server/services/jobAggregator.ts
+
+This service must fetch jobs from multiple APIs:
+
+Primary APIs:
+
+* JSearch API (RapidAPI)
+* SerpAPI Google Jobs
+* Zenserp Google Jobs
+* Arbeitnow API (free jobs)
+* Adzuna API (India jobs)
+* Arbeitnow fallback dataset
+
+If one API fails → automatically try next API.
+
+3. Merge and normalize all job data into one common format.
+
+Common Job Interface:
+
+{
+id,
+title,
+company,
+location,
+salary,
+jobType,
+remote,
+description,
+skills,
+postedDate,
+source
+}
+
+4. Filter for Indian users:
+
+* Bangalore
+* Hyderabad
+* Pune
+* Mumbai
+* Delhi
+* Chennai
+* Gurgaon
+* Noida
+* Remote India
+
+5. Add support for career categories:
+
+* Cyber Security
+* BCA / MCA / IT Support
+* Data Entry
+* Digital Marketing
+* Sales
+* HR
+* Finance
+* Fresher Jobs
+* Internship Jobs
+* Government Jobs (if available)
+
+6. Improve search system:
+
+User profile skills must influence job query.
+Example:
+
+If user selects “Cyber Security”
+API query must be:
+“cyber security jobs india”
+
+7. Update Backend Route:
+
+GET /api/jobs
+
+This route must:
+
+* Call Job Aggregator Service
+* Return merged real job list
+* Add API source tag
+
+8. Update Website Jobs Page:
+
+* Fetch jobs only from /api/jobs
+* Show loading skeleton while fetching
+* Show “Live Jobs” badge
+* Show “Source: JSearch / Google Jobs / Adzuna”
+
+9. Add API environment variables support:
+
+.env
+
+RAPID_API_KEY=
+SERP_API_KEY=
+ZENSERP_API_KEY=
+ADZUNA_APP_ID=
+ADZUNA_APP_KEY=
+
+10. If NO jobs found:
+
+* Show smart message:
+  “No live jobs found for this skill. Try related skills.”
+
+Never show fake jobs silently.
+
+Goal:
+The product must feel like a real job marketplace with large job coverage across all career fields.

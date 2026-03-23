@@ -1,0 +1,303 @@
+Update my existing HirenextAI web project with the following improvements.
+Do not break existing functionality.
+Keep same theme (Black + Purple premium glass UI).
+
+✅ 1. DASHBOARD UI IMPROVEMENT (VERY IMPORTANT)
+
+Currently dashboard sidebar is on LEFT.
+Change this system.
+
+Required Change:
+
+Remove full left sidebar
+
+Move all sidebar menu items under user profile dropdown on TOP RIGHT
+
+When user clicks profile avatar → dropdown should show:
+
+Find Jobs
+
+Applications
+
+AI Tools
+
+Profile
+
+Subscription
+
+Logout
+
+Also show:
+
+AI usage progress
+
+Upgrade plan button inside dropdown
+
+Dashboard main area should become full width clean layout
+
+✅ 2. SEARCH BAR IMPROVEMENT
+
+Search placeholder should be:
+
+Search "Cyber Security", "AI", "BCA Fresher", "Remote Jobs"
+
+Add suggestion chips:
+
+Cyber Security
+
+AI / ML
+
+BCA Jobs
+
+MCA Jobs
+
+IT Support
+
+Digital Marketing
+
+Full Stack
+
+Python Developer
+
+Do NOT show "Job Not Found".
+
+If API returns empty → show fallback jobs (India focused).
+
+✅ 3. NAVBAR CLEANUP
+
+Top navbar must ONLY contain:
+
+Features
+
+Pricing
+
+Sign In
+
+Get Started
+
+Remove Contact from navbar.
+
+Create separate Features page listing:
+
+AI Cover Letter Generator
+
+AI Resume Optimizer
+
+Job Tracker
+
+Interview Prep AI
+
+Real Job Listings
+
+Skill Match Score
+
+✅ 4. FOOTER FULL REDESIGN
+
+Footer background: Pure Black
+Text: White
+Accent: Purple
+
+Footer columns:
+
+About
+
+About HirenextAI
+
+Features
+
+Pricing
+
+Support
+
+Help Center
+
+Privacy Policy
+
+Terms & Conditions
+
+Cookie Policy
+
+Contact
+
+support@hirenextai.com
+
++91 99999 99999
+
+Bengaluru, India
+
+Add social icons.
+
+Bottom center:
+
+© 2026 HirenextAI. All rights reserved.
+
+✅ 5. CREATE LEGAL PAGES (SEPARATE ROUTES)
+
+Create pages:
+
+/about
+
+/help-center
+
+/privacy-policy
+
+/terms
+
+/cookies
+
+/contact
+
+Each page must have:
+
+Premium dark UI
+
+Proper headings
+
+Real structured content
+
+Mobile responsive
+
+✅ 6. COOKIE CONSENT SYSTEM
+
+On first website visit show popup:
+
+Text:
+
+We use cookies to improve your experience.
+
+Buttons:
+
+Accept (Purple)
+
+Deny (Outline)
+
+Save decision in localStorage.
+
+If accepted → enable analytics
+If denied → disable analytics
+
+Do not show popup again.
+
+✅ 7. LOGIN PAGE IMPROVEMENTS
+
+Fix UI issue where emoji and text overlap inside input fields.
+
+Input icons must be properly spaced.
+
+Add:
+
+Google Login button (if client ID not present show Coming Soon)
+
+Phone OTP login tab
+
+Demo Login button
+
+Demo Login should:
+
+Directly open dashboard
+
+Not create account
+
+Show FREE badge
+
+Block actions → show popup "Please sign in to continue"
+
+✅ 8. LANDING PAGE IMPROVEMENT
+
+Make landing page more premium:
+
+Add 3D gradient background
+
+Add animated job cards
+
+Add AI robot illustration
+
+Add trust badges
+
+Add testimonial section
+
+Add pricing section only ONCE (remove duplicate pricing heading)
+
+✅ 9. PROFILE SETUP IMPROVEMENT
+
+Improve onboarding steps.
+
+Add more options:
+
+Cities:
+
+Bangalore
+
+Hyderabad
+
+Pune
+
+Mumbai
+
+Delhi
+
+Chennai
+
+Remote India
+
+Degrees:
+
+BCA
+
+MCA
+
+BTech
+
+BSc CS
+
+BBA
+
+MBA
+
+Diploma
+
+MTech
+
+Skills:
+
+Java
+
+Python
+
+React
+
+Node
+
+Cyber Security
+
+DevOps
+
+AWS
+
+Figma
+
+SEO
+
+Digital Marketing
+
+Also allow custom skill input
+
+✅ 10. JOB API IMPROVEMENT
+
+Integrate multiple job sources:
+
+JSearch
+
+SerpAPI
+
+TheirStack
+
+Zenserp
+
+Merge results.
+
+If one fails → fallback to others.
+
+Always show jobs.
+
+Never show empty screen.

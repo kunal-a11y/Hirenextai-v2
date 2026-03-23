@@ -1,0 +1,138 @@
+Upgrade Admin Panel System for HirenextAI.
+
+GOAL:
+Create a fully manageable admin dashboard with separate layout and user management system.
+
+STEP 1 — Create Separate Admin Layout
+
+Create new component:
+src/components/AdminLayout.tsx
+
+This layout must NOT show normal user navigation.
+
+Admin Navbar should contain:
+
+- Dashboard
+- Users
+- Support Tickets
+- Platform Analytics
+- Jobs Management
+- Credit Management
+- Logout
+- Small profile avatar on right
+
+Reduce navbar height to 64px.
+
+Make navigation horizontally scrollable on small screens.
+
+STEP 2 — Fix Dashboard Navbar Size
+
+In DashboardLayout:
+
+Reduce padding and font size of nav items.
+
+Make nav items:
+
+font-size: 14px
+gap: 16px
+
+Ensure profile avatar is always visible.
+
+Add overflow-x-auto for nav container.
+
+STEP 3 — Admin Route Structure
+
+Admin routes must use AdminLayout instead of DashboardLayout.
+
+Update App.tsx:
+
+/dashboard/admin → AdminLayout + AdminDashboard page
+/dashboard/admin/users → AdminUsers page
+/dashboard/admin/tickets → AdminTickets page
+/dashboard/admin/jobs → AdminJobs page
+/dashboard/admin/credits → AdminCredits page
+
+STEP 4 — Build Admin Users Management Page
+
+Create page:
+src/pages/admin/AdminUsers.tsx
+
+Features:
+
+Table columns:
+
+- Name
+- Email
+- Plan
+- Credits Left
+- Status (Active / Banned)
+- Actions
+
+Actions dropdown:
+
+- View Profile
+- Give Credits (+10 / +50 / +100)
+- Reset Credits
+- Ban User
+- Activate User
+- Promote to Recruiter
+- Delete Account
+
+Use modal confirmation for dangerous actions.
+
+STEP 5 — Backend Admin APIs
+
+Create routes:
+
+GET /api/admin/users
+PATCH /api/admin/user/:id/credits
+PATCH /api/admin/user/:id/ban
+PATCH /api/admin/user/:id/activate
+DELETE /api/admin/user/:id
+
+All routes protected with isAdmin middleware.
+
+STEP 6 — Credit System Integration
+
+When admin gives credits:
+
+Insert into credit_transactions table.
+
+Update user monthly credit balance.
+
+STEP 7 — Admin Dashboard Improvements
+
+Admin dashboard cards:
+
+- Total Users
+- Active Users
+- Banned Users
+- Total Jobs
+- Total Applications
+- AI Credits Used Today
+
+Add charts (basic bar chart):
+
+Users growth
+Applications growth
+
+STEP 8 — Security
+
+Normal users cannot access any /dashboard/admin routes.
+
+Hide admin routes from sitemap.
+
+STEP 9 — Final UX
+
+Admin panel must feel like:
+
+Stripe / Firebase Console / Supabase Admin.
+
+Dark theme consistent with HirenextAI branding.
+
+Smooth animations.
+
+Goal Outcome:
+
+Admin can fully control platform users, credits, jobs, and support tickets.
+Platform becomes real SaaS control system.

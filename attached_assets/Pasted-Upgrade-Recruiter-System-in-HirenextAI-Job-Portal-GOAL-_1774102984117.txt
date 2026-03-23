@@ -1,0 +1,206 @@
+Upgrade Recruiter System in HirenextAI Job Portal.
+
+GOAL:
+Create a completely separate Recruiter experience with its own profile, dashboard, job management, applicant tracking, analytics, and subscription-ready monetization structure.
+
+IMPORTANT:
+Do NOT break existing Job Seeker system.
+Recruiter system must be role-based.
+
+--------------------------------------------------
+
+STEP 1 — DATABASE CHANGES
+
+Update users table:
+
+Add:
+is_recruiter (boolean default false)
+
+Create recruiter_profiles table:
+
+id uuid primary key default gen_random_uuid()
+user_id uuid references users(id)
+company_name text
+company_logo text
+company_website text
+industry text
+company_size text
+company_description text
+company_location text
+hr_name text
+hr_position text
+created_at timestamp default now()
+
+Create job_applications table:
+
+id uuid primary key default gen_random_uuid()
+job_id uuid
+user_id uuid
+resume_url text
+status text default 'applied'
+notes text
+created_at timestamp default now()
+
+Create recruiter_subscriptions table:
+
+id uuid primary key default gen_random_uuid()
+user_id uuid
+plan text default 'free'
+job_post_limit integer default 1
+featured_jobs_limit integer default 0
+created_at timestamp default now()
+
+--------------------------------------------------
+
+STEP 2 — AUTH ROLE LOGIC
+
+If user selects "Recruiter Signup":
+
+Set:
+is_recruiter = true
+
+Create recruiter_profile automatically.
+
+Recruiter must NOT see Job Seeker AI tools.
+
+--------------------------------------------------
+
+STEP 3 — RECRUITER DASHBOARD ROUTES
+
+Create protected recruiter routes:
+
+GET /api/recruiter/overview
+Return:
+totalJobs
+activeJobs
+totalApplicants
+shortlistedApplicants
+
+POST /api/recruiter/job
+Create job.
+
+PATCH /api/recruiter/job/:id
+Edit job.
+
+DELETE /api/recruiter/job/:id
+Delete job.
+
+GET /api/recruiter/applicants/:jobId
+Return applicant list with profile + match score.
+
+PATCH /api/recruiter/applicant/:id/status
+Update status:
+shortlisted
+interview
+rejected
+selected
+
+GET /api/recruiter/analytics
+Return job views + applications per job.
+
+--------------------------------------------------
+
+STEP 4 — RECRUITER FRONTEND DASHBOARD
+
+Create new route:
+/recruiter/dashboard
+
+Layout sections:
+
+⭐ Overview Cards
+Total Jobs
+Total Applicants
+Active Jobs
+Interview Scheduled
+
+⭐ Manage Jobs Page
+List recruiter jobs
+Edit / Delete / Pause
+
+⭐ Applicants Page
+Table:
+Candidate name
+Skill match %
+Status dropdown
+View Resume
+Add Notes
+
+⭐ Analytics Page
+Bar chart:
+Applications per job
+
+--------------------------------------------------
+
+STEP 5 — JOB BOOST SYSTEM
+
+Add featured boolean in jobs table.
+
+Recruiter can click:
+"Boost Job"
+
+Featured jobs appear:
+Homepage top section
+Recommended jobs section
+
+--------------------------------------------------
+
+STEP 6 — RECRUITER PROFILE PAGE
+
+Fields:
+
+Company logo upload
+Company name
+Industry
+Company size
+Location
+HR name
+HR designation
+Company website
+Company description
+
+--------------------------------------------------
+
+STEP 7 — SUBSCRIPTION READY STRUCTURE
+
+Create recruiter plan constants:
+
+FREE:
+post 1 job
+
+STARTER:
+post 5 jobs
+basic analytics
+
+PRO:
+unlimited jobs
+featured jobs
+AI ranking
+
+Do NOT integrate payment gateway now.
+Just structure limits.
+
+--------------------------------------------------
+
+STEP 8 — UI RULES
+
+Recruiter dashboard must be:
+
+Separate layout from user dashboard
+Professional corporate design
+Sidebar navigation
+
+--------------------------------------------------
+
+GOAL OUTCOME:
+
+Recruiters can:
+
+Create profile
+Post jobs
+Manage applicants
+Track hiring pipeline
+Boost jobs
+View analytics
+Use subscription limits
+
+System must be scalable for future payment integration.

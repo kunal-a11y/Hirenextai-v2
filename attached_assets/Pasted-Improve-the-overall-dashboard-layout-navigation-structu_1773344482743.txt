@@ -1,0 +1,85 @@
+Improve the overall dashboard layout, navigation structure, landing page sections, and footer design of the HirenextAI web platform.
+
+DASHBOARD SIDEBAR IMPROVEMENT
+
+* Move the user profile card, subscription info, and AI usage section from the left sidebar to the top-right area.
+* Place them inside a dropdown menu triggered by:
+
+  * User avatar
+    OR
+  * Three-dot menu icon.
+* Sidebar should only contain main navigation items:
+
+  * Jobs
+  * Applications
+  * AI Tools
+  * Profile
+  * Subscription
+* Make sidebar cleaner and more minimal.
+
+LANDING PAGE NAVBAR FIX
+
+* Remove duplicate pricing section from the main landing page body.
+* Keep “Pricing” only as a separate dedicated page.
+* Clicking “Pricing” in the top navbar should open a full pricing page.
+
+FEATURES PAGE
+
+* Create a new dedicated Features page.
+* Move all feature descriptions from landing page into this page.
+* Show detailed sections:
+
+  * Smart Job Matching
+  * AI Cover Letter Generator
+  * Application Tracker
+  * Interview Prep AI
+  * Resume Optimizer
+* Use cards, icons, and animations for each feature.
+
+FOOTER REDESIGN (VERY IMPORTANT)
+
+* Entire footer background should be solid black.
+* Footer text should be white.
+* Add purple accent hover effects.
+
+Footer content should include:
+
+Company:
+
+* About HirenextAI
+* Features
+* Pricing
+* Contact
+
+Support:
+
+* Help Center
+* Privacy Policy
+* Terms & Conditions
+
+Contact Details:
+
+* Support Email
+* Contact Phone
+* Office Address (placeholder allowed)
+
+Social Links:
+
+* LinkedIn
+* Instagram
+* Twitter
+
+Copyright Section:
+“© 2025 HirenextAI. All Rights Reserved.”
+
+Make footer look premium, trustworthy, and startup-grade.
+
+GENERAL DESIGN IMPROVEMENTS
+
+* Maintain dark theme with subtle purple accents.
+* Add soft glow hover effects on buttons.
+* Improve spacing consistency.
+* Use modern SaaS typography scale.
+
+Goal:
+Make the web platform feel like a real funded startup product with a clean dashboard layout, professional navigation flow, and trust-building footer.

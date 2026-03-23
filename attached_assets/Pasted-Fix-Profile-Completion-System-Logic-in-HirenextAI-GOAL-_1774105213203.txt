@@ -1,0 +1,121 @@
+Fix Profile Completion System Logic in HirenextAI.
+
+GOAL:
+1. Recruiters must NOT see normal user profile completion popup.
+2. Profile completion popup for job seekers must follow 3-minute cooldown rule.
+
+-------------------------------------
+STEP 1 — Disable User Profile Completion for Recruiters
+-------------------------------------
+
+In DashboardLayout or global profile check logic:
+
+Add condition:
+
+if (user.role === "recruiter") {
+   skip profile completion popup completely
+}
+
+Recruiters should only complete:
+
+Company Name
+Company Location
+Company Website
+Recruiter Name
+Recruiter Phone
+
+Remove:
+
+User profile strength banner
+Skill suggestion popup
+Resume upload reminder
+
+-------------------------------------
+STEP 2 — Fix Popup Cooldown System (3 Minutes)
+-------------------------------------
+
+Implement localStorage cooldown logic.
+
+Create helper:
+
+function shouldShowProfilePopup() {
+   const lastShown = localStorage.getItem("profilePopupTime");
+   if (!lastShown) return true;
+
+   const diff = Date.now() - Number(lastShown);
+   return diff > 3 * 60 * 1000;
+}
+
+When popup opens:
+
+localStorage.setItem("profilePopupTime", Date.now());
+
+-------------------------------------
+STEP 3 — Trigger Popup Only When:
+-------------------------------------
+
+User role = job_seeker
+Profile completion < 60%
+User is on dashboard pages
+
+Do NOT trigger on:
+
+Login page
+Landing page
+Recruiter pages
+
+-------------------------------------
+STEP 4 — Fix Re-trigger on Page Navigation
+-------------------------------------
+
+Use global state OR React Context:
+
+const [profilePopupShown, setProfilePopupShown] = useState(false);
+
+Only show popup if:
+
+!profilePopupShown AND shouldShowProfilePopup()
+
+After showing:
+
+setProfilePopupShown(true)
+
+-------------------------------------
+STEP 5 — Recruiter Profile Page Redesign
+-------------------------------------
+
+Recruiter profile page must show:
+
+Company Logo Upload
+Company Name
+Industry
+Company Size
+Company Location
+Company Description
+Recruiter Name
+Recruiter Position
+Recruiter Phone
+LinkedIn Profile
+
+Remove:
+
+Skills section
+Education timeline
+Experience timeline
+Resume upload
+
+-------------------------------------
+STEP 6 — UX Improvements
+-------------------------------------
+
+Popup animation: slide from bottom-right
+Add close button
+Add "Remind me later"
+
+-------------------------------------
+GOAL RESULT:
+
+Recruiter experience becomes clean.
+User popup becomes non-annoying.
+Better retention.
+Better product quality.

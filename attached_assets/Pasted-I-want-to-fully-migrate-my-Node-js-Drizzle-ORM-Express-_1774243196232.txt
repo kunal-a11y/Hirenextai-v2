@@ -1,0 +1,73 @@
+I want to fully migrate my Node.js + Drizzle ORM + Express + Vite full-stack project from PostgreSQL to MySQL WITHOUT breaking anything.
+
+IMPORTANT: Do NOT remove any existing features, APIs, routes, schedulers, authentication logic, AI integrations, or job fetching services.
+
+Your task is to perform a COMPLETE and SAFE migration.
+
+Step-by-step requirements:
+
+DATABASE & ORM
+
+* Replace all usage of drizzle-orm/pg-core with drizzle-orm/mysql-core
+* Convert all schema files accordingly
+* SERIAL → INT AUTO_INCREMENT PRIMARY KEY
+* BOOLEAN → TINYINT(1)
+* JSONB → JSON
+* TEXT[] arrays → JSON columns
+* TIMESTAMP WITH TIME ZONE → DATETIME
+* Remove PostgreSQL-specific syntax (double quotes, RETURNING, etc.)
+* Ensure foreign keys and indexes remain intact
+* Ensure correct dependency order of tables
+
+SQL FILE
+
+* Generate ONE single file named: database_mysql.sql
+* Include ALL tables, indexes, constraints, defaults
+* File must be directly importable using:
+  mysql -u USER -p DBNAME < database_mysql.sql
+
+BACKEND
+
+* Replace pg driver with mysql2
+* Update database connection code to use MySQL pool
+* Update DATABASE_URL format:
+  mysql://USER:PASSWORD@HOST:PORT/DATABASE
+* Ensure all queries work with MySQL syntax
+* Remove PostgreSQL-specific query logic
+
+ENV CONFIG
+
+* Update .env example for MySQL
+* Keep all existing API keys and configs unchanged
+
+BUILD & TYPES
+
+* Ensure project builds successfully:
+  pnpm install
+  pnpm build
+* Fix all TypeScript errors
+* Fix runtime import issues
+
+SERVER
+
+* Ensure Express server starts successfully
+* Ensure API routes respond (example: /api/jobs, /api/auth, /api/profile)
+* Ensure scheduler and background jobs still work
+
+FRONTEND
+
+* Do NOT change any UI logic
+* Ensure frontend still fetches data from backend APIs
+
+OUTPUT REQUIRED
+
+1. Updated schema files (MySQL)
+2. Updated DB connection code
+3. database_mysql.sql file
+4. List of all files changed
+5. Confirmation that server can run with MySQL
+
+Do NOT simplify logic.
+Do NOT remove tables.
+Do NOT skip indexes.
+Do NOT break auth or AI modules.

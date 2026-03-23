@@ -1,0 +1,119 @@
+Build AI Credit System for HirenextAI.
+
+Goal:
+Track and limit AI usage per user and enable subscription-based access.
+
+Step 1 — Database Changes
+
+Update users table:
+
+Add new columns:
+
+ai_credits (integer default 20)
+plan (text default 'free')
+last_credit_reset (timestamp default now())
+
+Create table credit_transactions:
+
+id (uuid primary key default gen_random_uuid())
+user_id (uuid)
+credits_used (integer)
+feature_used (text)
+created_at (timestamp default now())
+
+Add indexes:
+index on user_id
+index on created_at
+
+Step 2 — Backend Credit Middleware
+
+Create middleware:
+
+checkAiCredits
+
+Logic:
+
+Fetch user ai_credits
+If ai_credits <= 0
+Return 403:
+"AI credit limit reached. Upgrade plan."
+
+Else allow request.
+
+Create utility:
+
+deductCredits(userId, credits, feature)
+
+Update user ai_credits = ai_credits - credits
+Insert into credit_transactions table
+
+Step 3 — Apply Credit Logic to AI Routes
+
+Add credit deduction:
+
+Resume Generator → cost 3 credits
+Cover Letter → cost 2 credits
+AI Chat → cost 1 credit
+Job Match Analysis → cost 1 credit
+
+Apply checkAiCredits middleware before AI execution.
+
+Step 4 — Frontend UI
+
+Add AI Credits Badge in Dashboard Header:
+
+Example:
+
+⚡ AI Credits Left: 17
+
+Add Credits Usage Modal:
+
+Shows:
+
+Plan Name
+Credits Remaining
+Upgrade Button
+
+Show warning toast when credits < 5.
+
+Block AI button when credits finished.
+
+Step 5 — Monthly Reset Logic
+
+Create scheduler job:
+
+Runs daily.
+
+If last_credit_reset > 30 days:
+
+Reset credits:
+
+Free → 20 credits
+Pro → 200 credits
+Premium → Unlimited (set large number like 999999)
+
+Update last_credit_reset timestamp.
+
+Step 6 — Pricing Integration
+
+Update pricing page benefits:
+
+Free:
+20 AI credits / month
+
+Pro:
+200 AI credits / month
+
+Premium:
+Unlimited AI credits
+
+Step 7 — Security
+
+Never trust frontend credit count.
+Always validate on backend.
+
+Goal Outcome:
+
+AI usage is controlled.
+Startup cost becomes predictable.
+Revenue system foundation ready.

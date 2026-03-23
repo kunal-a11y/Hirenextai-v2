@@ -1,0 +1,209 @@
+Build Advanced Profile System and Improve Job Match Quality for HirenextAI Job Portal.
+
+Project Context:
+This is a full stack job portal built using Node.js (Express), React (Vite), and PostgreSQL.
+Existing features include authentication, job search with filters, AI recommended jobs, support ticket system, admin panel, and AI credit system.
+
+Goal:
+Improve user profile quality so AI job recommendations become more accurate and user engagement increases.
+
+==============================
+STEP 1 — DATABASE UPGRADE
+=========================
+
+Update the profiles table and add new structured career fields.
+
+Run SQL:
+
+ALTER TABLE profiles
+ADD COLUMN IF NOT EXISTS skills text[] DEFAULT '{}',
+ADD COLUMN IF NOT EXISTS education jsonb DEFAULT '[]',
+ADD COLUMN IF NOT EXISTS experience jsonb DEFAULT '[]',
+ADD COLUMN IF NOT EXISTS career_goal text,
+ADD COLUMN IF NOT EXISTS resume_url text,
+ADD COLUMN IF NOT EXISTS profile_completion int DEFAULT 0;
+
+Create indexes:
+
+CREATE INDEX IF NOT EXISTS idx_profiles_completion ON profiles(profile_completion);
+CREATE INDEX IF NOT EXISTS idx_profiles_skills ON profiles USING GIN (skills);
+
+==============================
+STEP 2 — PROFILE COMPLETION ENGINE
+==================================
+
+Create backend utility file:
+utils/profileCompletion.ts
+
+Logic:
+
+Profile completion formula:
+
+Basic info (name, email, location) = 20%
+Skills added = 25%
+Education timeline added = 15%
+Experience timeline added = 20%
+Resume uploaded = 10%
+Career goal filled = 10%
+
+Return percentage and update profile_completion column whenever profile is updated.
+
+==============================
+STEP 3 — RESUME UPLOAD + AI PARSING
+===================================
+
+Create API route:
+
+POST /api/profile/upload-resume
+
+Features:
+
+* Accept PDF upload using multer
+* Extract text using pdf-parse
+* Send text to AI model
+* AI must return structured JSON:
+
+{
+skills: [],
+education: [],
+experience: [],
+careerGoal: ""
+}
+
+* Update user profile automatically
+* Store resume_url
+* Add validation
+* Handle errors safely
+
+==============================
+STEP 4 — PROFILE UPDATE API
+===========================
+
+Update existing profile update endpoint:
+
+PUT /api/profile
+
+Allow updating:
+
+skills
+education
+experience
+career_goal
+
+After saving:
+Recalculate profile completion automatically.
+
+==============================
+STEP 5 — FRONTEND PROFILE PAGE UPGRADE
+======================================
+
+Enhance /dashboard/profile UI.
+
+Add sections:
+
+1. Profile Strength Meter Card (Top Section)
+
+* Large progress bar
+* Text: Profile Strength: XX%
+* Color logic:
+  Red < 40%
+  Yellow 40–70%
+  Green > 70%
+
+2. Skills Selector
+
+* Multi-select skill chips
+* Provide list of 30 popular skills
+* Allow custom skill input
+* Allow skill removal
+
+3. Education Timeline Section
+
+* Add Education button
+
+* Modal form with:
+  Degree
+  Field
+  College
+  Start Year
+  End Year
+
+* Editable cards
+
+* Delete option
+
+4. Experience Timeline Section
+
+* Add Experience button
+
+* Modal form with:
+  Company
+  Role
+  Start Date
+  End Date
+  Description
+
+* Editable cards
+
+* Delete option
+
+5. Resume Upload Section
+
+* Drag and drop upload UI
+* Upload progress loader
+* Show success toast after parsing
+
+6. AI Skill Suggestion Button
+
+Button text:
+“Suggest Skills Based on Career Goal”
+
+API:
+GET /api/profile/skill-suggestions
+
+Return trending skills list.
+
+7. Completion Banner
+
+If profile completion < 60%:
+
+Show banner:
+“Complete your profile to improve job recommendations.”
+
+Button scrolls to missing sections.
+
+==============================
+STEP 6 — IMPROVE JOB MATCH LOGIC
+================================
+
+Update recommended jobs scoring:
+
+* If profile_completion < 40 → reduce final matchScore by 30%
+* If skills count < 3 → show warning banner
+* If profile_completion > 80 → boost matchScore by +10%
+
+==============================
+STEP 7 — PERFORMANCE
+====================
+
+* Cache profile completion calculation
+* Limit resume upload size
+* Add loading skeleton UI
+* Use optimistic UI updates
+
+==============================
+EXPECTED RESULT
+===============
+
+Users can:
+
+* Build structured career profile
+* Upload resume and auto-fill profile
+* See profile strength meter
+* Get more accurate job recommendations
+
+Follow existing project structure.
+Do not break authentication.
+Do not change existing routes unless required.
+
+After implementation run production build and verify profile page loads correctly.

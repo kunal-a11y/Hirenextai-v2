@@ -1,0 +1,171 @@
+🚀 HIRENEXTAI FULL MASTER SYSTEM FIX PROMPT
+
+Upgrade the full HirenextAI platform UX, recruiter flow, profile system, job quality, navigation and subscription logic.
+
+Implement all changes carefully without breaking existing features.
+
+⭐ 1. Separate Recruiter Profile System
+
+Currently recruiters are seeing job-seeker profile popup and UI.
+
+Create a completely separate recruiter profile completion system.
+
+Recruiter profile fields:
+
+Company Name (required)
+Company Logo
+Company Website
+Company Location
+Industry
+Company Size
+Recruiter Name
+Recruiter Position
+Work Email
+Phone
+Company Description
+
+Logic:
+
+Recruiters must NOT see job seeker profile popup.
+Recruiters must NOT see “Complete profile to get better job match”.
+Recruiter dashboard must show:
+Recruiter Profile Strength Meter
+Message: “Complete company profile to build trust with candidates”.
+
+Popup rule:
+
+Show recruiter profile popup only once after signup.
+If skipped → remind after 24 hours (not 3 minutes).
+⭐ 2. Fix Job Seeker Profile Popup Bug
+
+Problem: Popup appears again and again when switching pages.
+
+Fix:
+
+When user clicks “Remind me later” save timestamp in localStorage:
+profileReminderTime
+Do NOT show popup again for 3 minutes.
+
+Popup should only show when:
+
+profileCompletion < 60%
+AND currentTime > reminderTime
+⭐ 3. Fix Navigation Scroll Issue
+
+When user clicks navbar or footer links, page opens from middle.
+
+Fix:
+
+On every route change run:
+
+window.scrollTo({ top: 0, behavior: "smooth" });
+⭐ 4. Auto Translate Jobs to English
+
+Jobs from APIs may come in German / French.
+
+System must:
+
+Detect job description language.
+If NOT English → translate to English using AI.
+Store both:
+originalDescription
+translatedDescription
+
+Frontend must show label:
+
+“🌐 Translated from German”
+
+⭐ 5. Improve Job Detail Formatting
+
+Backend must clean job description:
+
+Remove HTML tags
+Format bullet points
+Extract:
+Skills
+Experience
+Responsibilities
+Location
+Salary
+⭐ 6. Improve Apply Flow UX
+
+Inside Job Detail Modal show steps:
+
+Step 1 → Generate Cover Letter
+Step 2 → Copy or Auto Fill
+Step 3 → Click Apply Now
+
+If job is external:
+
+Show message:
+
+“This job is hosted on external website.”
+
+⭐ 7. Prioritize Jobs by User Country
+
+If user location = India:
+
+Show India jobs first
+Then Remote jobs
+Then foreign jobs
+⭐ 8. Fix Recruiter Dashboard Navigation
+
+Recruiter dashboard menu must contain:
+
+Dashboard
+Post Job
+Boost Job
+Applicants
+Company Profile
+Subscription
+Analytics
+
+Remove job-seeker UI elements.
+
+Fix “Browse Jobs redirect” bug.
+
+⭐ 9. Improve AI Job Match Formula
+
+New match scoring:
+
+Skill match → 50%
+Experience → 20%
+Location → 15%
+Salary → 10%
+Job type → 5%
+
+Profiles <40% completion → reduce match score by 25%.
+
+⭐ 10. Improve Subscription System
+
+Recruiter plans must show:
+
+Job posting limit
+Boost credits
+Featured credits
+Plan validity
+Upgrade button
+
+Job Seeker plans must show:
+
+AI credits
+Resume tools
+Job alerts
+⭐ 11. Fix Job List Limit
+
+Jobs page must:
+
+Show pagination or “Load More”
+Not limit to only 10 jobs.
+⭐ 12. Fix AI Recruiter Message Generator
+
+When user clicks “Generate Message”:
+
+Show loading spinner
+Then display generated message
+Add Copy button
+⭐ 13. Final UX Improvements
+Make dashboard navbar horizontally scrollable on mobile.
+Always show profile avatar.
+Show AI credits badge in header.
+Show notification icon.

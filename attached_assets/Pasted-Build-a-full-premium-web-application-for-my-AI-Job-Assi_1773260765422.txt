@@ -1,0 +1,146 @@
+Build a full premium web application for my AI Job Assistant product “HirenextAI”.
+
+The web app must use the SAME backend APIs, database, and business logic as the mobile app. Users must have a unified account and shared data across mobile and web.
+
+WEBSITE STRUCTURE
+
+1. Premium Landing Page (Public)
+
+Create a modern, startup-style landing page with:
+
+* Dark + gradient tech theme
+* Glassmorphism UI
+* Smooth animations
+* 3D floating elements / job cards / AI assistant visuals
+* Sections:
+
+  * Hero section with headline:
+    “Find Your Next Job Smarter with AI”
+  * Features section:
+    AI Auto-Apply
+    Smart Job Matching
+    Application Tracker
+    Interview Prep
+  * Subscription pricing cards:
+    Free
+    Pro (₹199/month)
+    Premium (₹499/month)
+  * Testimonials
+  * FAQ
+  * Footer with social links
+
+Add buttons:
+
+* Get Started
+* Login
+* Try Demo
+
+WEB APP LOGIN
+
+2. Authentication
+
+Use SAME authentication system as mobile app.
+
+* Email login
+* Phone OTP login
+* Session persistence
+* If already logged in → do not show login again
+
+After login → redirect to Dashboard.
+
+USER DASHBOARD
+
+3. Dashboard Layout
+
+Left sidebar navigation:
+
+* Jobs
+* Applications
+* AI Tools
+* Profile
+* Subscription
+
+Top bar:
+
+* User name
+* Profile completion %
+* Subscription status
+* Usage remaining this month
+
+JOBS PAGE
+
+4. Job Listing Page
+
+* Fetch jobs from SAME backend API:
+  GET /api/jobs
+* Filters:
+  Category
+  Location
+  Remote
+  Fresher / Internship
+* Job cards premium UI
+* Job detail modal/page
+* Apply button → AI auto-fill preview
+
+AI FEATURES
+
+5. AI Application Tools
+
+* Generate cover letter
+* Generate recruiter message
+* Optimize resume bullet
+* Use SAME OpenAI backend endpoints
+* Track monthly usage
+
+SUBSCRIPTION LOGIC
+
+6. Subscription System
+
+Free Plan:
+
+* 5 AI generations per month
+* Limited job applications
+* Profile completion required
+
+Pro Plan:
+
+* 50 AI generations
+* Unlimited job applications
+
+Premium Plan:
+
+* Unlimited AI tools
+* Priority job recommendations
+
+If usage limit reached → show upgrade modal.
+
+PROFILE PAGE
+
+7. Profile Management
+
+* Edit skills
+* Edit education
+* Upload resume
+* Career preferences
+* Show profile completion %
+
+TECH STACK
+
+8. Build web app using:
+
+* React + Next.js or Vite
+* Tailwind CSS
+* Framer Motion animations
+* Three.js or Spline for 3D visuals
+
+DOMAIN STRUCTURE
+
+* Main website: https://hirenextai.com
+* Web app: https://app.hirenextai.com
+* Backend API: https://api.hirenextai.com
+
+Ensure responsive design for desktop and tablet.
+
+GOAL
+
+Create a premium SaaS-style web experience that feels like a funded startup product and fully integrates with the existing mobile backend and database.

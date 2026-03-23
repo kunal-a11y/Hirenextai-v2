@@ -1,0 +1,112 @@
+Build a full web application version of my existing HirenextAI mobile app.
+
+The web app must be an exact functional replica of the mobile application, using the same backend APIs, database, authentication system, subscription logic, and AI features.
+
+GENERAL REQUIREMENTS
+
+* Do not redesign product logic
+* Keep same feature flow as mobile app
+* Maintain same data structure
+* Ensure full synchronization between mobile and web users
+
+AUTHENTICATION
+
+* Use the same login system as the mobile app
+
+* Support:
+
+  * Phone number login with OTP verification
+  * Email and password login
+  * Google OAuth login
+
+* Maintain persistent login sessions
+
+* If user is already authenticated, skip login screen and redirect directly to dashboard
+
+DASHBOARD STRUCTURE
+
+Create a web dashboard layout with sidebar navigation:
+
+* Jobs
+* Applications Tracker
+* AI Tools
+* Profile
+* Subscription
+
+Display:
+
+* User profile completion percentage
+* Current subscription plan
+* Monthly AI usage remaining
+
+JOB SYSTEM
+
+* Fetch real job data using existing backend endpoint:
+  GET /api/jobs
+
+* Support:
+
+  * Category filtering
+  * Location filtering
+  * Remote jobs
+  * Internship / Fresher / Full-time tags
+  * Manual search
+
+* Job detail page must allow:
+
+  * AI cover letter generation
+  * Recruiter message generation
+  * Resume bullet optimization
+  * Application submission tracking
+
+AI FEATURES
+
+Use existing backend AI endpoints:
+
+* POST /api/ai/cover-letter
+* POST /api/ai/optimize-bullet
+* POST /api/ai/recruiter-message
+
+Track usage limits based on subscription plan.
+
+SUBSCRIPTION LOGIC
+
+Free Plan:
+
+* Allow 5 AI generations per month
+* Limit number of job applications
+* Require profile completion
+
+Pro Plan:
+
+* Increase AI usage limit
+* Unlimited job applications
+
+Premium Plan:
+
+* Unlimited AI tools
+* Priority job recommendations
+
+PROFILE SYSTEM
+
+* Allow editing education, skills, career preferences
+* Resume upload support
+* Show profile completion status
+* Sync all changes with mobile app database
+
+TECH STACK
+
+* Build using React (Next.js or Vite)
+* Use Tailwind CSS for styling
+* Use same color theme as mobile app (dark black + purple accent)
+* Ensure responsive design
+
+DOMAIN STRUCTURE
+
+* Website landing page: https://hirenextai.com
+* Web app dashboard: https://app.hirenextai.com
+* Backend API: https://api.hirenextai.com
+
+GOAL
+
+Create a full web SaaS dashboard that mirrors the mobile app experience exactly, ensuring users can switch between mobile and web without losing data or functionality.

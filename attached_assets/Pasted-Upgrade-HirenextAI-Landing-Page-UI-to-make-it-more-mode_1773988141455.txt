@@ -1,0 +1,80 @@
+Upgrade HirenextAI Landing Page UI to make it more modern, premium and startup-level.
+
+1. Add Background Glow Animation
+
+Create subtle animated gradient glow blobs in the background.
+
+Requirements:
+- Use purple, indigo and blue colors
+- Slow floating animation (CSS keyframes)
+- Blur effect for smooth glow
+- Positioned behind all sections
+- Must not affect readability
+- Should feel like modern SaaS landing page
+
+Example style inspiration:
+Stripe / Linear / Framer landing pages.
+
+2. Add Hover Glow Effects
+
+Add glow interaction on:
+
+- Buttons
+- Pricing cards
+- Feature cards
+- Navigation CTA button
+
+Effect:
+- Soft purple shadow on hover
+- Slight scale transform (scale 1.03)
+- Smooth transition (0.3s ease)
+
+3. Add Founder Section (New Section on Homepage)
+
+Create new section below "How It Works".
+
+Title:
+Meet The Founder
+
+Content layout:
+
+Left side:
+- Circular founder avatar placeholder
+- Purple gradient border glow
+
+Right side:
+- Founder Name: Kunal Purohit
+- Role: Founder & Developer of HirenextAI
+- Short description:
+
+"HirenextAI was built with the vision to make job searching smarter and faster for students and freshers. By combining real job data with AI-powered career tools, the platform aims to simplify career growth and reduce job search stress."
+
+- Social icons placeholder (LinkedIn / GitHub)
+
+Design:
+- Dark glass card background
+- Soft border glow
+- Responsive layout
+- Slight floating animation on avatar
+
+4. Improve Hero Section Animation
+
+- Add animated typing effect in headline:
+"Find Jobs Smarter with AI"
+
+- Add subtle scroll indicator arrow
+
+5. Add Section Reveal Animation
+
+- Sections should fade + slide up when entering viewport
+- Use IntersectionObserver or Framer Motion
+
+6. Performance Rule
+
+- All animations must be lightweight
+- No heavy libraries unless needed
+- Maintain fast page load
+
+Goal:
+Landing page should look like funded startup product.
+Users must feel trust + excitement.

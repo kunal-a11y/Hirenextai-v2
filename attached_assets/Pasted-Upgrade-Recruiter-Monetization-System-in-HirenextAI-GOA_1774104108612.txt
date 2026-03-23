@@ -1,0 +1,197 @@
+Upgrade Recruiter Monetization System in HirenextAI.
+
+GOAL:
+Create a real recruiter payment + subscription + job boost monetization system.
+
+This system must be production-ready but payment gateway integration can be placeholder for now.
+
+-------------------------------------
+STEP 1 — Database Changes
+-------------------------------------
+
+Create new table: recruiter_subscriptions
+
+Fields:
+id (uuid primary key default gen_random_uuid())
+user_id (uuid not null)
+plan_name (text not null)  -- free / starter / growth / enterprise
+job_post_limit (integer default 5)
+boost_credits (integer default 0)
+featured_jobs (integer default 0)
+valid_till (timestamp)
+created_at (timestamp default now())
+
+Indexes:
+index on user_id
+index on plan_name
+
+
+Create new table: job_boost_transactions
+
+Fields:
+id (uuid primary key)
+user_id (uuid)
+job_id (uuid)
+credits_used (integer)
+type (text) -- boost / featured
+created_at (timestamp default now())
+
+-------------------------------------
+STEP 2 — Recruiter Plan Logic
+-------------------------------------
+
+Create plan constants:
+
+FREE PLAN:
+job_post_limit = 3
+boost_credits = 0
+
+STARTER PLAN:
+job_post_limit = 15
+boost_credits = 5
+
+GROWTH PLAN:
+job_post_limit = 50
+boost_credits = 20
+
+ENTERPRISE:
+Unlimited
+
+When recruiter posts job:
+Check active subscription.
+If limit reached → return error:
+"Upgrade your recruiter plan to post more jobs."
+
+-------------------------------------
+STEP 3 — Backend APIs
+-------------------------------------
+
+Create new route file:
+
+routes/recruiterBilling.ts
+
+Endpoints:
+
+GET /api/recruiter/subscription
+Return current plan + usage.
+
+POST /api/recruiter/upgrade
+Body:
+plan_name
+
+Logic:
+Create new recruiter_subscriptions record.
+Set valid_till = now + 30 days.
+
+POST /api/recruiter/boost-job
+Body:
+jobId
+
+Logic:
+Check boost_credits > 0.
+Deduct credit.
+Update job:
+isBoosted = true
+boostExpiry = now + 7 days.
+
+POST /api/recruiter/featured-job
+Body:
+jobId
+
+Logic:
+Deduct featured job credit.
+Mark job:
+isFeatured = true
+
+-------------------------------------
+STEP 4 — Frontend Recruiter Subscription Page
+-------------------------------------
+
+Create page:
+
+/dashboard/recruiter/plans
+
+Show:
+
+Current Plan Card
+Usage Progress Bar (Jobs used / Limit)
+Boost credits remaining
+
+Plan Cards UI:
+
+FREE
+STARTER
+GROWTH
+ENTERPRISE
+
+Each card:
+
+Price placeholder
+Features list
+Upgrade button
+
+On click Upgrade:
+Call /api/recruiter/upgrade.
+
+-------------------------------------
+STEP 5 — Recruiter Dashboard Improvements
+-------------------------------------
+
+On job card show:
+
+⭐ Boost Job button
+⭐ Make Featured button
+
+If boosted:
+Show purple glow border.
+
+If featured:
+Show gold badge.
+
+-------------------------------------
+STEP 6 — Job Feed Priority Logic
+-------------------------------------
+
+Modify job query:
+
+Order by:
+isFeatured DESC
+isBoosted DESC
+postedAt DESC
+
+-------------------------------------
+STEP 7 — Admin Monetization Control
+-------------------------------------
+
+Admin panel:
+
+Add Recruiter Revenue section.
+
+Show:
+
+Total recruiters
+Active paid plans
+Boost credits sold
+Featured jobs sold
+
+-------------------------------------
+STEP 8 — Future Payment Gateway Ready
+-------------------------------------
+
+In upgrade API:
+
+Add placeholder:
+
+// TODO: integrate Razorpay / Stripe
+
+-------------------------------------
+GOAL OUTCOME:
+
+Recruiters can:
+Buy plans
+Boost jobs
+Feature jobs
+Hit job limits
+Upgrade plans
+
+Platform becomes REAL SaaS monetization engine.
